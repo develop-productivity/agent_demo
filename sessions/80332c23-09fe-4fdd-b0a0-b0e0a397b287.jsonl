@@ -1,0 +1,2 @@
+{"type":"session","version":1,"id":"7ba16a30-d786-4e0d-8810-defe34838d1d","createdAt":"2026-07-19T08:49:33.805Z","cwd":"/mnt/d/code/agent/agent_demo"}
+{"type":"message","id":"052c7583-83b5-436f-a655-826375d8230d","timestamp":"2026-07-19T08:49:33.813Z","message":{"role":"system","content":"You are a helpful assistant. Use the provided tools when you need to look up information, run commands, or read/write files. Otherwise respond directly.\n\nCurrent working directory: /mnt/d/code/agent/agent_demo\n\nCurrent time: 2026-07-19T08:49:33.812Z"}}

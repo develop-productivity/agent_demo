@@ -1,0 +1,4 @@
+{"type":"session","version":1,"id":"c3f92ed4-fa88-4964-a04d-fb6abaf964f2","createdAt":"2026-07-19T08:46:52.932Z","cwd":"/mnt/d/code/agent/agent_demo"}
+{"type":"message","id":"eff7c825-93c7-437c-b8d6-38fd910019f6","timestamp":"2026-07-19T08:46:52.937Z","message":{"role":"system","content":"You are a helpful assistant. Use the provided tools when you need to look up information, run commands, or read/write files. Otherwise respond directly.\n\nCurrent working directory: /mnt/d/code/agent/agent_demo\n\nCurrent time: 2026-07-19T08:46:52.937Z"}}
+{"type":"message","id":"1f90fecb-8ae5-4126-860f-41bad2320024","timestamp":"1784450817026","message":{"role":"user","content":"hi"}}
+{"type":"message","id":"f48f966c-14aa-4e88-9ad7-f1b3e54907d6","timestamp":"1784450818725","message":{"role":"assistant","content":"Hello! How can I help you today? If you need me to look up information, run commands, or work with files, just let me know!"}}

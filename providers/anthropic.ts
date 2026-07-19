@@ -1,5 +1,5 @@
-import type { CompletionRequest, CompletionResponse, Api, Message, Tool, ToolCall, StreamEvent } from "./types.ts";
-import {iterateSse} from "./sse.ts"
+import type { CompletionRequest, CompletionResponse, Api, Message, Tool, ToolCall, StreamEvent } from "./types";
+import {iterateSse} from "./sse"
 import { Record, type TSchema } from "typebox";
 
 export interface AnthropicConfig {

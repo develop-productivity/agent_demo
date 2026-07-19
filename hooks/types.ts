@@ -1,5 +1,5 @@
 // hooks/types.ts
-import type { SessionStorage } from "../session/storage.ts";
+import type { SessionStorage } from "../session/storage";
 
 export interface HookContexts {
     sessionStart: {

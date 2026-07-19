@@ -1,7 +1,7 @@
-import type { Api, Message } from "../providers/types.ts";
-import type { SessionEntry, MessageEntry } from "../session/types.ts";
-import type { SessionStorage } from "../session/storage.ts";
-import { buildContext } from "../session/build.ts";
+import type { Api, Message } from "../providers/types";
+import type { SessionEntry, MessageEntry } from "../session/types";
+import type { SessionStorage } from "../session/storage";
+import { buildContext } from "../session/build";
 
 const COMPACTION_THRESHOLD = Number(process.env.COMPACTION_THRESHOLD) || 128_000;
 const KEEP_LAST_TURNS = 2;

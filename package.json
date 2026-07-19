@@ -2,6 +2,7 @@
     "name": "agent-demo",
     "type": "module",
     "dependencies": {
+        "gray-matter": "^4.0.3",
         "typebox": "^1.1.38"
     },
     "devDependencies": {

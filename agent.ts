@@ -1,22 +1,22 @@
-import { HookRegistry } from "./hooks/registry.ts";
-import { registerBuiltinHooks } from "./hooks/builtin.ts";
-import { toolsByName, tools, type Tool } from "./tools.ts";   // tools.ts 记得 export toolsByName
-import { confirm } from "./utils.js";
+import { HookRegistry } from "./hooks/registry";
+import { registerBuiltinHooks } from "./hooks/builtin";
+import { toolsByName, tools, type Tool } from "./tools";   // tools.ts 记得 export toolsByName
 import readline from "node:readline";
 import { join } from "node:path";
 
 import { Compile } from "typebox/compile";
 import { Value } from "typebox/value";
 
-import { createOpenAiApi } from "./providers/openai.ts"
-import { createAnthropicApi } from "./providers/anthropic.ts"
-import type { Api, Message } from "./providers/types.ts"
-import type { TSchema,Static } from "typebox";
+import { createOpenAiApi } from "./providers/openai"
+import { createAnthropicApi } from "./providers/anthropic"
+import type { Api, Message } from "./providers/types"
+import type { TSchema } from "typebox";
 
-import { SessionStorage } from "./session/storage.ts";
-import { buildContext } from "./session/build.ts";
-import {mabeCompact} from "./compaction/compact.ts";
+import { SessionStorage } from "./session/storage";
+import { buildContext } from "./session/build";
+import {mabeCompact} from "./compaction/compact";
 import { mkdir } from "node:fs/promises";
+import {loadSkills, Skill} from "./skills";
 
 
 function createApi(): Api {
@@ -55,7 +55,7 @@ function validateArgs(tool: Tool<TSchema>, rawArgs: Record<string, unknown>) {
     let v = validatorCache.get(tool.parameters);
     if (!v) { v = Compile(tool.parameters); validatorCache.set(tool.parameters, v); }
     if (v.Check(args)) return { ok: true, args };
-    const errs = v.Errors(args).map(e => `  - ${e.instancePath || "root"}: ${e.message}`).join("\n");
+    const errs = v.Errors(args).map((e: { instancePath?: string; message: string }) => `  - ${e.instancePath || "root"}: ${e.message}`).join("\n");
     return { ok: false, msg: `Validation failed:\n${errs}` };
 }
 
@@ -76,7 +76,7 @@ async function executeTool(name: string, args: Record<string, unknown>, signal: 
         return await tool.execute(v.args as never, { signal });
         // return await tool.execute(args, { signal });
     } catch (e) {
-        return `ERROR: ${e.message}`;
+        return `ERROR: ${e instanceof Error ? e.message : String(e)}`;
     }
 }
 
@@ -210,6 +210,9 @@ async function main() {
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
     const hooks = new HookRegistry();
     registerBuiltinHooks(hooks, rl);
+    const skillDir = './skills';
+    const skills: Skill[] = await loadSkills(skillDir);
+    if (skills.length > 0) {console.log(`[skills] load ${skills.length} skills`);}
     const {storage, extras}= await createSession(hooks);
     let lastSigintAt = 0;
     rl.on("SIGINT", () => {

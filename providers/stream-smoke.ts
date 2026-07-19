@@ -1,5 +1,5 @@
-import { createOpenAiApi } from "./openai.ts";
-import type { Message, Tool } from "./types.ts";
+import { createOpenAiApi } from "./openai";
+import type { Message, Tool } from "./types";
 
 async function testText() {
     console.log("\n=== TEST 1: 纯文本 ===\n");

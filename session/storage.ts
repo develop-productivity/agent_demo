@@ -1,4 +1,4 @@
-import type { SessionEntry, SessionHeader, SessionMetadata} from "./types.ts"
+import type { SessionEntry, SessionHeader, SessionMetadata} from "./types"
 import { readFile, writeFile, appendFile, access } from "node:fs/promises";
 
 

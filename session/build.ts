@@ -1,5 +1,5 @@
-import type { Message } from "../providers/types.ts";
-import type { SessionEntry,MessageEntry,CompactionEntry } from "./types.ts";
+import type { Message } from "../providers/types";
+import type { SessionEntry,MessageEntry,CompactionEntry } from "./types";
 // 摘要 message 长什么样：把 compaction 的 summary 包装成一条虚拟 user message
 // 为什么用 user 角色：让 LLM 把它当"用户提供的背景信息"读入，不需要它自己去理解一段 assistant 说过的话
 // 也可以用 system，但多条 system 有的 provider 不喜欢，user 更安全

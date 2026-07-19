@@ -1,4 +1,4 @@
-import type {Api, CompletionRequest, CompletionResponse, Message, ToolCall, Tool} from "./types.ts"
+import type {Api, CompletionRequest, CompletionResponse, Message, ToolCall, Tool} from "./types"
  export interface SseEvent {
     event: string;      // "message_start" 之类
     data: string;       // 多个 data: 用 \n 拼起来

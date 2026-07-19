@@ -1,7 +1,7 @@
 // hooks/builtin.ts
 import type readline from "node:readline";
 import { confirm } from "../utils.js";
-import type { HookRegistry } from "./registry.ts";
+import type { HookRegistry } from "./registry";
 
 
 // ============================================================

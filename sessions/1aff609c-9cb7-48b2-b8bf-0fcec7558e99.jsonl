@@ -1,6 +1,0 @@
-{"type":"session","version":1,"id":"8c504e28-3532-404d-abc1-ca88abe32c7c","createdAt":"2026-07-19T07:46:48.156Z","cwd":"/Users/dongshiyin.1/Code/agents/pi/agent_demo"}
-{"type":"message","id":"08ba69f4-3d12-4849-87e1-df507a4f87c0","timestamp":"2026-07-19T07:46:48.157Z","message":{"role":"system","content":"You are a helpful assistant. Use the provided tools when you need to look up information, run commands, or read/write files. Otherwise respond directly.\n\nCurrent working directory: /Users/dongshiyin.1/Code/agents/pi/agent_demo\n\nCurrent time: 2026-07-19T07:46:48.157Z"}}
-{"type":"message","id":"4cf1fdd8-9123-434d-83a6-23836cc5e632","timestamp":"1784447209912","message":{"role":"user","content":"hi"}}
-{"type":"message","id":"59d4743e-77bf-4aad-b526-755e003fadba","timestamp":"1784447210778","message":{"role":"assistant","content":"Hi! 👋 How can I help you today?"}}
-{"type":"message","id":"c88b0680-752f-4d20-ab0f-f0d7748e212e","timestamp":"1784447226582","message":{"role":"user","content":"输出一个长的文字，大概100字"}}
-{"type":"message","id":"c73db6af-245f-46c5-b6c6-f8614e7d8295","timestamp":"1784447228369","message":{"role":"assistant","content":"好的，这是一段大约100字的中文文字：\n\n人生就像一场漫长的旅行，不必在乎目的地，重要的是沿途的风景和看风景的心情。有时候我们会遇到风雨，有时候会见到彩虹，但无论怎样，每一步都算数。珍惜当下，感恩遇见，用微笑面对生活的酸甜苦辣。愿我们都能在平凡的日子里，找到属于自己的光亮，活出最真实的模样。"}}

@@ -1,10 +1,12 @@
 import type { SessionEntry, SessionHeader, SessionMetadata} from "./types"
+import { Message } from "../providers/types"
 import { readFile, writeFile, appendFile, access } from "node:fs/promises";
 
 
 // 补齐缺失的类型定义
 interface SessionOpts {
   cwd: string;
+  id?: string;  // 可选：外部指定 session id，否则内部生成
 }
 
 export class SessionStorage {
@@ -25,7 +27,7 @@ export class SessionStorage {
         const header : SessionHeader = {
             type: "session",
             version: 1,
-            id: crypto.randomUUID(),
+            id: opts?.id ?? crypto.randomUUID(),
             createdAt: new Date().toISOString(),
             cwd: opts?.cwd ?? process.cwd(),
         };
@@ -66,6 +68,16 @@ export class SessionStorage {
     getEntry(id: string): SessionEntry | undefined {
         return this.byId.get(id);
     }
+
+    async appendMessage(message: Message): Promise<void> {
+        await this.appendEntry({
+            type: "message",
+            id: crypto.randomUUID(),
+            timestamp: Date.now().toString(),
+            message
+        })
+    }
+    
 }
 
 // const s = await SessionStorage.create("/tmp/test.jsonl");

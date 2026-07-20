@@ -1,3 +1,0 @@
-{"type":"session","version":1,"id":"d8ac478d-c376-44ff-a196-50c307ef1671","createdAt":"2026-07-19T07:47:43.835Z","cwd":"/Users/dongshiyin.1/Code/agents/pi/agent_demo"}
-{"type":"message","id":"d77dd455-202e-4d3c-94e5-91155e581a42","timestamp":"2026-07-19T07:47:43.836Z","message":{"role":"system","content":"You are a helpful assistant. Use the provided tools when you need to look up information, run commands, or read/write files. Otherwise respond directly.\n\nCurrent working directory: /Users/dongshiyin.1/Code/agents/pi/agent_demo\n\nCurrent time: 2026-07-19T07:47:43.836Z"}}
-{"type":"message","id":"23b0392c-198d-4dd2-9ca5-bb6f415b7281","timestamp":"1784447265338","message":{"role":"user","content":"hi"}}

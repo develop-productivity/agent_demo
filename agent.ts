@@ -11,6 +11,7 @@ import { mkdir } from "node:fs/promises";
 import {loadSkills, Skill, createReadSkillTool} from "./skills";
 import { callLLMStream, createApi } from "./providers/factory";
 import { createAgentTool } from "./tools/agent-tools"
+import {loadPermissionEngine} from "./permissions/engine"
 
 
 
@@ -115,7 +116,8 @@ async function createSession(hooks: HookRegistry): Promise<{ storage: SessionSto
 async function main() {
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
     const hooks = new HookRegistry();
-    registerBuiltinHooks(hooks, rl);
+    const engine = await loadPermissionEngine(".permission.json");
+    registerBuiltinHooks(hooks, rl, engine);
     const skillDir = './skills';
     const skills: Skill[] = await loadSkills(skillDir);
     if (skills.length > 0) {console.log(`[skills] load ${skills.length} skills`);}

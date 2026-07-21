@@ -2,6 +2,8 @@
 import type readline from "node:readline";
 import { confirm } from "../utils.js";
 import type { HookRegistry } from "./registry";
+import { PermissionEngine } from "../permissions/engine";
+import {askPermission} from "../permissions/prompt";
 
 
 // ============================================================
@@ -34,10 +36,26 @@ export function logToolResult(ctx: {toolName: string; args: Record<string, unkno
     const preview = ctx.result.length > 80 ? ctx.result.slice(0, 80) + "..." : ctx.result;
     console.log(`> ${ctx.toolName}(${JSON.stringify(ctx.args)}) -> ${preview}`)
 }
-export function registerBuiltinHooks(hooks: HookRegistry, rl: readline.Interface): void {
+export function permissionStstem (engine:PermissionEngine, rl: readline.Interface) {
+    return async (ctx: { toolName: string; args: Record<string, unknown> }) => {
+        const decision = engine.decide(ctx.toolName, ctx.args);
+        if (decision.verdict === "allow") return
+        if (decision.verdict === "deny") {
+            return { block: true, reason: decision.reason ?? "denied by policy" };
+        }
+        // verdict = ask
+        const choice = await askPermission(rl, ctx.toolName, ctx.args, decision.reason);
+        if (choice === "always") {
+            engine.rememberAllowTool(ctx.toolName);
+        } else if (choice === "no") {
+            return { block: true, reason: "user denied" };
+        }
+        return;
+    };
+}
+export function registerBuiltinHooks(hooks: HookRegistry, rl: readline.Interface, engine: PermissionEngine): void {
     hooks.register("sessionStart", "*", injectCwdAndTime);
-    hooks.register("preToolUse", "bash", makeConfirmBash(rl));
-    hooks.register("preToolUse", ["write_file", "edit_file"], makeConfirmWrite(rl));
+    hooks.register("preToolUse", "*", permissionStstem(engine, rl));
     hooks.register("postToolUse", "*", logToolResult);
 }
 

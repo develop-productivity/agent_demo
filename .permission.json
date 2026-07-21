@@ -1,0 +1,15 @@
+{
+    "rules": [
+        { "tool": "read_file", "verdict": "allow" },
+        { "tool": "get_current_time", "verdict": "allow" },
+        { "tool": "write_file", "verdict": "ask", "reason": "writes to disk" },
+        { "tool": "edit_file", "verdict": "ask", "reason": "modifies existing file" },
+        { "tool": "bash", "verdict": "ask", "reason": "shell command" },
+        {
+            "tool": "bash",
+            "argPattern": { "field": "command", "matches": "(?:^|/|\\s)(rm|mv|chmod|dd|sudo|kill|shutdown)(?:\\s|$)" },
+            "verdict": "deny",
+            "reason": "destructive shell command"
+        }
+    ]
+}

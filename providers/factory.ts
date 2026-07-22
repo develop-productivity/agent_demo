@@ -1,7 +1,7 @@
-import { Api, Message} from "./types";
-import { createAnthropicApi } from "./anthropic";
-import { createOpenAiApi } from "./openai";
-import { tools } from "../tools/tools"
+import { Api, Message} from "./types.ts";
+import { createAnthropicApi } from "./anthropic.ts";
+import { createOpenAiApi } from "./openai.ts";
+import { tools } from "../tools/tools.ts"
 
 export function createApi(): Api {
     let api: Api;

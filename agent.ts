@@ -1,17 +1,20 @@
-import { HookRegistry } from "./hooks/registry";
-import { registerBuiltinHooks } from "./hooks/builtin";
-import { toolsByName, validateArgs, registerTool } from "./tools/tools"
+import { HookRegistry } from "./hooks/registry.ts";
+import { registerBuiltinHooks } from "./hooks/builtin.ts";
+import { toolsByName, validateArgs, registerTool } from "./tools/tools.ts"
 import readline from "node:readline";
 import { join } from "node:path";
-import type { Message } from "./providers/types"
-import { SessionStorage } from "./session/storage";
-import { buildContext } from "./session/build";
-import {mabeCompact} from "./compaction/compact";
+import type { Message } from "./providers/types.ts"
+import { SessionStorage } from "./session/storage.ts";
+import { buildContext } from "./session/build.ts";
+import {mabeCompact} from "./compaction/compact.ts";
 import { mkdir } from "node:fs/promises";
-import {loadSkills, Skill, createReadSkillTool} from "./skills";
-import { callLLMStream, createApi } from "./providers/factory";
-import { createAgentTool } from "./tools/agent-tools"
-import {loadPermissionEngine} from "./permissions/engine"
+import {loadSkills, Skill, createReadSkillTool} from "./skills.ts";
+import { callLLMStream, createApi } from "./providers/factory.ts";
+import { createAgentTool } from "./tools/agent-tools.ts"
+import {loadPermissionEngine} from "./permissions/engine.ts"
+import { loadMcpConfig } from "./mcp/loader.ts";
+import { McpClient } from "./mcp/client.ts";
+import { mcpTool } from "./mcp/adapter.ts";
 
 
 
@@ -123,9 +126,37 @@ async function main() {
     if (skills.length > 0) {console.log(`[skills] load ${skills.length} skills`);}
     // skills as tools
     registerTool(createReadSkillTool(skills));
+    // add mcp servers
+    const mcpConfig = await loadMcpConfig("./.mcp.json");
+    const mcpClients: McpClient[] = [];
+    for (const [name, cfg] of Object.entries(mcpConfig.servers)) {
+        const client = new McpClient(name, cfg);
+        try {
+            await client.start();
+            const tools = await client.listTools();
+            for (const t of tools) {
+                // 注册 进入
+                registerTool(mcpTool(client, t));
+            }
+            console.log(`[mcp] ${name}: registered ${tools.length} tools`);
+            mcpClients.push(client);
+        } catch (err) {
+            console.warn(`[mcp] ${name} failed to start:`, err);
+        }
+    }
     // Register agent tool with parent session ID and hooks
     const {storage, extras}= await createSession(hooks);
     registerTool(createAgentTool({ parentSessionId: storage.getMetadata().id, hooks }));
+    // 注册beforeExit 事件
+    process.on("beforeExit", async () => {
+        for (const client of mcpClients) {
+            await client.close()
+        }
+    })
+    // 注册 exit 事件
+    process.on("exit", () => {
+        for (const c of mcpClients) c.killSync();
+    });
     let lastSigintAt = 0;
     rl.on("SIGINT", () => {
         const now = Date.now();
@@ -150,6 +181,8 @@ async function main() {
         const line = await new Promise<string>((r) => rl.question("User: ", r));
         if (!line || line === "exit") {
             printResumeHint(storage.getMetadata().id, false);
+            rl.close();
+            process.exit(0)
             break;
         };
         const pre = await hooks.run("userPromptSubmit", {input: line.trim(), storage})
@@ -164,7 +197,7 @@ async function main() {
         });
         await runAgent(storage, rl, hooks);
     }
-    rl.close();
+    
 }
 
 main();

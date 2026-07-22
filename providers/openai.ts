@@ -1,6 +1,6 @@
 //文件目标 providers/openai.ts 输出一个 factory：给它 baseURL + apiKey + name，返回一个 Api 对象
-import type {Api, CompletionRequest, CompletionResponse, Message, ToolCall, Tool,StreamEvent} from "./types"
-import {iterateSse} from "./sse"
+import type {Api, CompletionRequest, CompletionResponse, Message, ToolCall, Tool,StreamEvent} from "./types.ts"
+import {iterateSse} from "./sse.ts"
 
 export interface OpenAiConfig {
     name: string;

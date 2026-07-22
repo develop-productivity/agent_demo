@@ -1,5 +1,5 @@
 
-import type {Message} from "../providers/types"
+import type {Message} from "../providers/types.ts"
 
 interface BaseEntry {
     id: string;

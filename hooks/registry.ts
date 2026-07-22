@@ -1,4 +1,4 @@
-import type { SessionStorage } from "../session/storage";
+import type { SessionStorage } from "../session/storage.ts";
 
 // 内部结构:一条注册记录
 interface Entry<K extends HookKind> {

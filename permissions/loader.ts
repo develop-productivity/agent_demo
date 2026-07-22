@@ -1,5 +1,5 @@
 import { readFile } from "node:fs/promises";
-import type { PermissionRule } from "./engine";
+import type { PermissionRule } from "./engine.ts";
 const VALID_VERDICTS = new Set(["allow", "deny", "ask"]);
 
 //但 rule 是从 JSON.parse 来的,实际是 unknown——你等于在说"我保证这是 PermissionRule",但函数体里的 check 又假设它可能不是

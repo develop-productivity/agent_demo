@@ -1,4 +1,4 @@
-import {loadRules} from "./loader"
+import {loadRules} from "./loader.ts"
 
 export type Verdict = "allow" | "deny" | "ask";
 

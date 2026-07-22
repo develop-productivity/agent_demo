@@ -1,5 +1,5 @@
-import type { SessionEntry, SessionHeader, SessionMetadata} from "./types"
-import { Message } from "../providers/types"
+import type { SessionEntry, SessionHeader, SessionMetadata} from "./types.ts"
+import { Message } from "../providers/types.ts"
 import { readFile, writeFile, appendFile, access } from "node:fs/promises";
 
 

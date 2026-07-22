@@ -1,9 +1,9 @@
 // hooks/builtin.ts
 import type readline from "node:readline";
 import { confirm } from "../utils.js";
-import type { HookRegistry } from "./registry";
-import { PermissionEngine } from "../permissions/engine";
-import {askPermission} from "../permissions/prompt";
+import type { HookRegistry } from "./registry.ts";
+import { PermissionEngine } from "../permissions/engine.ts";
+import {askPermission} from "../permissions/prompt.ts";
 
 
 // ============================================================
